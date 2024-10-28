@@ -26,7 +26,7 @@ public class LoginPage extends JFrame implements ActionListener {
         container.setLayout(null);
 
         // Username Label
-        userLabel = new JLabel("Usernamee:");
+        userLabel = new JLabel("Username:");
         userLabel.setBounds(50, 30, 100, 30);
         container.add(userLabel);
 
