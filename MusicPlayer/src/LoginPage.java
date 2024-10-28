@@ -16,6 +16,7 @@ public class LoginPage extends JFrame implements ActionListener {
     private static Map<String, String> users = new HashMap<>();
 
     public LoginPage() {
+
         setTitle("Login Page");
         setBounds(300, 90, 400, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
