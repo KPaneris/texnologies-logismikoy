@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,20 +71,33 @@ public class LoginPage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String username = userTextField.getText();
-        String password = new String(passwordField.getPassword());
+        String username = this.userTextField.getText();
+        String password = new String(this.passwordField.getPassword());
 
-        // Check if the entered credentials match any stored user
-        if (users.containsKey(username) && users.get(username).equals(password)) {
-            messageLabel.setForeground(Color.GREEN);
-            messageLabel.setText("Login successful!");
-            dispose(); // Close login page
-            new MusicPlayer(); // Open MusicPlayer if login is successful
-        } else {
-            messageLabel.setForeground(Color.RED);
-            messageLabel.setText("Invalid username or password.");
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT * FROM Users WHERE username = ? AND password = ?")) {
+
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) { // Εάν υπάρχει αποτέλεσμα, ο χρήστης είναι έγκυρος
+                this.messageLabel.setForeground(Color.GREEN);
+                this.messageLabel.setText("Login successful!");
+                this.dispose();
+                new MusicPlayer(); // Άνοιξε την εφαρμογή μουσικής ή την κύρια σελίδα
+            } else {
+                this.messageLabel.setForeground(Color.RED);
+                this.messageLabel.setText("Invalid username or password.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            this.messageLabel.setForeground(Color.RED);
+            this.messageLabel.setText("Database error.");
         }
     }
+
 
     // Inner class for Create Account page
     private class CreateAccountPage extends JFrame implements ActionListener {
