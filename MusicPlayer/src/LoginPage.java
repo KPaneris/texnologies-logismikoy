@@ -87,7 +87,7 @@ public class LoginPage extends JFrame implements ActionListener {
                 this.messageLabel.setForeground(Color.GREEN);
                 this.messageLabel.setText("Login successful!");
                 this.dispose();
-                new MusicPlayer(); // Άνοιξε την εφαρμογή μουσικής ή την κύρια σελίδα
+                new MusicPlayer(); // Άνοιξε την εφαρμογή μουσικής
             } else {
                 this.messageLabel.setForeground(Color.RED);
                 this.messageLabel.setText("Invalid username or password.");
@@ -189,7 +189,7 @@ public class LoginPage extends JFrame implements ActionListener {
                             try (PreparedStatement insertUser = connection.prepareStatement(
                                     "INSERT INTO Users (username, password) VALUES (?, ?)")) {
                                 insertUser.setString(1, username);
-                                insertUser.setString(2, password); // Θα ήταν καλύτερα αν ήταν κρυπτογραφημένο
+                                insertUser.setString(2, password);
                                 insertUser.executeUpdate();
                                 this.messageLabel.setForeground(Color.GREEN);
                                 this.messageLabel.setText("Account created successfully!");
