@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -163,28 +164,50 @@ public class LoginPage extends JFrame implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String username = userTextField.getText();
-            String password = new String(passwordField.getPassword());
-            String confirmPassword = new String(confirmPasswordField.getPassword());
+            String username = this.userTextField.getText();
+            String password = new String(this.passwordField.getPassword());
+            String confirmPassword = new String(this.confirmPasswordField.getPassword());
 
-            // Check if password and confirm password match and if the username is not empty
-            if (username.isEmpty() || password.isEmpty()) {
-                messageLabel.setForeground(Color.RED);
-                messageLabel.setText("Username or password cannot be empty.");
-            } else if (!password.equals(confirmPassword)) {
-                messageLabel.setForeground(Color.RED);
-                messageLabel.setText("Passwords do not match.");
-            } else if (users.containsKey(username)) {
-                messageLabel.setForeground(Color.RED);
-                messageLabel.setText("Username already exists.");
+            if (!username.isEmpty() && !password.isEmpty()) {
+                if (!password.equals(confirmPassword)) {
+                    this.messageLabel.setForeground(Color.RED);
+                    this.messageLabel.setText("Passwords do not match.");
+                } else {
+                    // Έλεγχος αν ο χρήστης υπάρχει ήδη στη βάση δεδομένων
+                    try (Connection connection = DatabaseConnection.getConnection();
+                         PreparedStatement checkUser = connection.prepareStatement(
+                                 "SELECT * FROM Users WHERE username = ?")) {
+
+                        checkUser.setString(1, username);
+                        ResultSet resultSet = checkUser.executeQuery();
+
+                        if (resultSet.next()) {
+                            this.messageLabel.setForeground(Color.RED);
+                            this.messageLabel.setText("Username already exists.");
+                        } else {
+                            // Εισαγωγή του νέου χρήστη στη βάση δεδομένων
+                            try (PreparedStatement insertUser = connection.prepareStatement(
+                                    "INSERT INTO Users (username, password) VALUES (?, ?)")) {
+                                insertUser.setString(1, username);
+                                insertUser.setString(2, password); // Θα ήταν καλύτερα αν ήταν κρυπτογραφημένο
+                                insertUser.executeUpdate();
+                                this.messageLabel.setForeground(Color.GREEN);
+                                this.messageLabel.setText("Account created successfully!");
+                                this.dispose();
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        this.messageLabel.setForeground(Color.RED);
+                        this.messageLabel.setText("Database error.");
+                    }
+                }
             } else {
-                // Add new user to the user map
-                users.put(username, password);
-                messageLabel.setForeground(Color.GREEN);
-                messageLabel.setText("Account created successfully!");
-                dispose(); // Close the create account page
+                this.messageLabel.setForeground(Color.RED);
+                this.messageLabel.setText("Username or password cannot be empty.");
             }
         }
+
     }
 
     public static void main(String[] args) {
