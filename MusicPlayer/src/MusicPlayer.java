@@ -173,6 +173,8 @@ public class MusicPlayer extends JFrame {
     }
 
     public static void main(String[] args) {
-        new LoginPage(); // Αρχική εμφάνιση της σελίδας login
+
+        new MusicPlayer();
+        //new LoginPage(); // Αρχική εμφάνιση της σελίδας login
     }
 }
