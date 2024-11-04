@@ -17,6 +17,7 @@ public class MusicPlayer extends JFrame {
 
     public MusicPlayer() {
         // Application title and settings
+
         setTitle("Music Player");
         setSize(800, 600);
         setMinimumSize(new Dimension(600, 400));
@@ -29,12 +30,12 @@ public class MusicPlayer extends JFrame {
         toolbar.setBackground(new Color(45, 45, 45));
 
         // Create buttons for the toolbar using oval buttons
-        JButton categoriesButton = createOvalButton("Categories", "src/photos/menu.png", new Color(177, 135, 35));
-        JButton homeButton = createOvalButton("Home", "src/photos/home.png", new Color(243, 236, 236, 255));
-        JButton settingsButton = createOvalButton("Settings", "src/photos/setting.png", new Color(33, 150, 243));
-        JButton myFavoritesSongsButton = createOvalButton("Favorite Songs", "src/photos/love_songs.png", new Color(255, 0, 0));
-        JButton myFavoritesArtistButton = createOvalButton("Favorite Artist", "src/photos/artist.png", new Color(76, 175, 80));
-        JButton moodButton = createOvalButton("Mood", "src/photos/mood.png", new Color(255, 87, 34));
+        JButton categoriesButton = createOvalButton("Categories", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\menu.png", new Color(177, 135, 35));
+        JButton homeButton = createOvalButton("Home", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\home.png", new Color(243, 236, 236, 255));
+        JButton settingsButton = createOvalButton("Settings", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\setting.png", new Color(33, 150, 243));
+        JButton myFavoritesSongsButton = createOvalButton("Favorite Songs", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\love_songs.png", new Color(255, 0, 0));
+        JButton myFavoritesArtistButton = createOvalButton("Favorite Artist", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\artist.png", new Color(76, 175, 80));
+        JButton moodButton = createOvalButton("Mood", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\mood.png", new Color(255, 87, 34));
 
         // Create search box with rounded corners
         RoundedSearchBox searchBox = new RoundedSearchBox();
@@ -137,7 +138,7 @@ public class MusicPlayer extends JFrame {
 
     private JButton getSearchButton(JTextField searchBox) {
         // Create a search button using the OvalButton class
-        JButton searchButton = new OvalButton("Search", "src/photos/search.png", new Color(141, 220, 15)); // Use the same color as the toolbar
+        JButton searchButton = new OvalButton("Search", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\search.png", new Color(141, 220, 15)); // Use the same color as the toolbar
         searchButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight)); // Use the same dimensions as other buttons
         searchButton.setToolTipText("Search");
 
@@ -272,6 +273,6 @@ public class MusicPlayer extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(MusicPlayer::new);
+        SwingUtilities.invokeLater(LoginPage::new);
     }
 }
