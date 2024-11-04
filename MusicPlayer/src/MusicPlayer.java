@@ -96,6 +96,8 @@ public class MusicPlayer extends JFrame {
         }
     }
 
+
+
     private void toggleSettingsMenu(JButton settingsButton) {
         if (settingsMenu.isShowing()) {
             settingsMenu.setVisible(false); // Close the menu if it's already showing
@@ -144,8 +146,8 @@ public class MusicPlayer extends JFrame {
 
         // Create the SearchAction and apply it to both the search button and searchBox
         SearchAction searchAction = new SearchAction(searchBox);
-        searchButton.addActionListener(searchAction); // Attach to button
-        searchBox.addActionListener(searchAction);    // Attach to Enter key in text field
+        searchButton.addActionListener(searchAction); // Listener to search button
+        searchBox.addActionListener(searchAction);    // listener to Enter key in text field
 
         return searchButton;
     }

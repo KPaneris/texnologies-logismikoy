@@ -2,9 +2,20 @@
   <library name="libs">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../libs/google-api-client-assembly-2.0.0-2.0.0/google-api-java-client/libs" />
+      <root url="jar://$PROJECT_DIR$/google-api-services-youtube-v3-rev20241022-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/google-api-client-2.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/google-api-client-assembly-2.0.0-2.0.0.zip!/" />
+      <root url="jar://$PROJECT_DIR$/jackson-core-2.18.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/guava-33.3.1-jre.jar!/" />
+      <root url="jar://$PROJECT_DIR$/google-oauth-client-1.36.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/google-http-client-jackson2-1.45.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/google-http-client-1.45.0.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/google-http-client-1.45.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.ideaLibSources/google-api-client-2.7.0-sources.jar!/" />
+    </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/../libs/google-api-client-assembly-2.0.0-2.0.0/google-api-java-client/libs" recursive="false" />
   </library>
 </component>
