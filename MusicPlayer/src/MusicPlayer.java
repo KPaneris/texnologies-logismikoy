@@ -1,180 +1,277 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MusicPlayer extends JFrame {
-    private JPanel contentPanel;
-    private CardLayout cardLayout;
+    private final JPanel contentPanel;
+    private final CardLayout cardLayout;
+
+    private final int buttonHeight = 50; // Height of buttons
+    private final int buttonWidth = 50; // Width of buttons
+
+    private JPopupMenu categoriesMenu; // Popup menu for categories
+    private JPopupMenu settingsMenu; // Popup menu for settings
 
     public MusicPlayer() {
+        // Application title and settings
         setTitle("Music Player");
         setSize(800, 600);
+        setMinimumSize(new Dimension(600, 400));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Δημιουργία toolbar με κουμπιά
-        JToolBar toolBar = new JToolBar();
-        toolBar.setFloatable(false);
-        toolBar.setBackground(new Color(30, 30, 30)); // Σκούρο χρώμα για το toolbar
+        // Create horizontal toolbar
+        JToolBar toolbar = new JToolBar(JToolBar.HORIZONTAL);
+        toolbar.setFloatable(false);
+        toolbar.setBackground(new Color(45, 45, 45));
 
-        JButton homeButton = new JButton("Home");
-        JButton myFavoritesButton = new JButton("My Favorites");
-        JButton profileButton = new JButton("Profile");
-        JButton hottestButton = new JButton("Hottest");
-        JButton logOutButton = new JButton("Log Out");
+        // Create buttons for the toolbar using oval buttons
+        JButton categoriesButton = createOvalButton("Categories", "src/photos/menu.png", new Color(177, 135, 35));
+        JButton homeButton = createOvalButton("Home", "src/photos/home.png", new Color(243, 236, 236, 255));
+        JButton settingsButton = createOvalButton("Settings", "src/photos/setting.png", new Color(33, 150, 243));
+        JButton myFavoritesSongsButton = createOvalButton("Favorite Songs", "src/photos/love_songs.png", new Color(255, 0, 0));
+        JButton myFavoritesArtistButton = createOvalButton("Favorite Artist", "src/photos/artist.png", new Color(76, 175, 80));
+        JButton moodButton = createOvalButton("Mood", "src/photos/mood.png", new Color(255, 87, 34));
 
-        // Ορισμός χρωμάτων για τα κουμπιά
-        homeButton.setBackground(new Color(70, 130, 180));
-        homeButton.setForeground(Color.WHITE);
-        myFavoritesButton.setBackground(new Color(70, 130, 180));
-        myFavoritesButton.setForeground(Color.WHITE);
-        profileButton.setBackground(new Color(70, 130, 180));
-        profileButton.setForeground(Color.WHITE);
-        hottestButton.setBackground(new Color(70, 130, 180));
-        hottestButton.setForeground(Color.WHITE);
-        logOutButton.setBackground(new Color(220, 50, 50)); // Κόκκινο χρώμα για το logout
-        logOutButton.setForeground(Color.WHITE);
+        // Create search box with rounded corners
+        RoundedSearchBox searchBox = new RoundedSearchBox();
+        JButton searchButton = getSearchButton(searchBox);
 
-        // Προσθήκη κουμπιών στο toolbar
-        toolBar.add(homeButton);
-        toolBar.add(myFavoritesButton);
-        toolBar.add(profileButton);
-        toolBar.add(hottestButton);
-        toolBar.add(logOutButton);
+        // Add buttons and search components to the toolbar with increased spacing
+        toolbar.add(Box.createHorizontalStrut(20)); // Increased space between components
+        toolbar.add(homeButton);
+        toolbar.add(Box.createHorizontalStrut(20)); // Increased space between components
+        toolbar.add(categoriesButton);
+        toolbar.add(Box.createHorizontalStrut(20)); // Increased space between components
+        toolbar.add(searchButton);
+        toolbar.add(Box.createHorizontalStrut(10)); // Reduced space between components
+        toolbar.add(searchBox);
+        toolbar.add(Box.createHorizontalStrut(20)); // Increased space between components
+        toolbar.add(myFavoritesSongsButton);
+        toolbar.add(Box.createHorizontalStrut(20)); // Increased space between components
+        toolbar.add(myFavoritesArtistButton);
+        toolbar.add(Box.createHorizontalStrut(20)); // Increased space between components
+        toolbar.add(moodButton);
+        toolbar.add(Box.createHorizontalStrut(20)); // Increased space between components
+        toolbar.add(settingsButton);
+        toolbar.add(Box.createHorizontalStrut(20)); // Increased space between components
 
-        add(toolBar, BorderLayout.NORTH);
+        // Add toolbar to the frame
+        add(toolbar, BorderLayout.NORTH);
 
-        // Δημιουργία κεντρικού panel με CardLayout για εναλλαγή περιεχομένου
+        // Central panel with CardLayout
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         add(contentPanel, BorderLayout.CENTER);
 
-        // Προσθήκη panels για κάθε κατηγορία
+        // Add panels for each category
         contentPanel.add(createHomePanel(), "Home");
-        contentPanel.add(createFavoritesPanel(), "My Favorites");
-        contentPanel.add(createProfilePanel(), "Profile");
-        contentPanel.add(createHottestPanel(), "Hottest");
+        contentPanel.add(createFavoritesSongsPanel(), "My Favorites Songs");
+        contentPanel.add(createFavoritesArtistPanel(), "My Favorites Artist");
+        contentPanel.add(createMoodPanel(), "Mood");
 
-        // Ακροατές δράσης για κάθε κουμπί
+        // Initialize categories and settings menus
+        initializeCategoriesMenu();
+        initializeSettingsMenu(settingsButton);
+
+        // Action listeners for changing content
         homeButton.addActionListener(e -> cardLayout.show(contentPanel, "Home"));
-        myFavoritesButton.addActionListener(e -> cardLayout.show(contentPanel, "My Favorites"));
-        profileButton.addActionListener(e -> cardLayout.show(contentPanel, "Profile"));
-        hottestButton.addActionListener(e -> cardLayout.show(contentPanel, "Hottest"));
-
-        // Logout κουμπί
-        logOutButton.addActionListener(e -> {
-            dispose();
-            new LoginPage(); // Εμφάνιση της σελίδας login
-        });
+        categoriesButton.addActionListener(e -> toggleCategoriesMenu(categoriesButton));
+        myFavoritesSongsButton.addActionListener(e -> cardLayout.show(contentPanel, "My Favorites Songs"));
+        myFavoritesArtistButton.addActionListener(e -> cardLayout.show(contentPanel, "My Favorites Artist"));
+        moodButton.addActionListener(e -> cardLayout.show(contentPanel, "Mood"));
 
         setVisible(true);
     }
 
-    // Δημιουργία panel για την κατηγορία Home με πληροφορίες και φόντο
+    private void toggleCategoriesMenu(JButton categoriesButton) {
+        if (categoriesMenu.isShowing()) {
+            categoriesMenu.setVisible(false); // Close the menu if it's already showing
+        } else {
+            categoriesMenu.show(categoriesButton, 0, categoriesButton.getHeight()); // Show the menu below the button
+        }
+    }
+
+    private void toggleSettingsMenu(JButton settingsButton) {
+        if (settingsMenu.isShowing()) {
+            settingsMenu.setVisible(false); // Close the menu if it's already showing
+        } else {
+            settingsMenu.show(settingsButton, 0, settingsButton.getHeight()); // Show the menu below the button
+        }
+    }
+
+    // Δημιουργία του popup menu για τις κατηγορίες
+    private void initializeCategoriesMenu() {
+        categoriesMenu = new JPopupMenu();
+        categoriesMenu.setBackground(new Color(100, 100, 100)); // Χρώμα φόντου για το popup menu (γκρι)
+        String[] categories = {"Rock", "Pop", "Hip Hop", "Jazz", "Classical"};
+
+        for (String category : categories) {
+            JMenuItem item = new JMenuItem(category);
+            item.setForeground(Color.WHITE); // Χρώμα γραμμάτων για το μενού (λευκό)
+            item.setBackground(new Color(100, 100, 100)); // Χρώμα φόντου για το μενού (γκρι)
+            item.addActionListener(e -> {
+                System.out.println("Selected category: " + category);
+                categoriesMenu.setVisible(false);
+            });
+            categoriesMenu.add(item);
+        }
+    }
+
+    private void initializeSettingsMenu(JButton settingsButton) {
+        settingsMenu = new JPopupMenu();
+        settingsMenu.setBackground(new Color(100, 100, 100)); // Background color for the settings menu
+        JMenuItem logOutItem = new JMenuItem("Log Out");
+        logOutItem.setForeground(Color.WHITE); // Text color for the menu item
+        logOutItem.setBackground(new Color(100, 100, 100)); // Background color for the menu item
+        logOutItem.addActionListener(e -> {
+            dispose(); // Close main window
+            new LoginPage(); // Open the login page
+        });
+        settingsMenu.add(logOutItem);
+        settingsButton.addActionListener(e -> toggleSettingsMenu(settingsButton));
+    }
+
+    private JButton getSearchButton(JTextField searchBox) {
+        // Create a search button using the OvalButton class
+        JButton searchButton = new OvalButton("Search", "src/photos/search.png", new Color(141, 220, 15)); // Use the same color as the toolbar
+        searchButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight)); // Use the same dimensions as other buttons
+        searchButton.setToolTipText("Search");
+
+        // Add action listener for search button
+        searchButton.addActionListener(e -> {
+            String searchTerm = searchBox.getText();
+            // Implement search functionality here
+            System.out.println("Searching for: " + searchTerm);
+        });
+
+        return searchButton;
+    }
+
+    // Method to create a round button for the toolbar
+    private JButton createOvalButton(String tooltip, String iconPath, Color backgroundColor) {
+        OvalButton button = new OvalButton(tooltip, iconPath, backgroundColor);
+        button.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+        return button;
+    }
+
+    private class OvalButton extends JButton {
+        public OvalButton(String tooltip, String iconPath, Color backgroundColor) {
+            super();
+            setToolTipText(tooltip);
+            setBackground(backgroundColor);
+            setOpaque(false);
+            setBorderPainted(false);
+            setFocusPainted(false);
+            setContentAreaFilled(false);
+            setMargin(new Insets(0, 0, 0, 0));
+
+            // Load and scale icon
+            ImageIcon icon = new ImageIcon(iconPath);
+            Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            setIcon(new ImageIcon(scaledImage));
+
+            // Mouse event effects
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    setBackground(new Color(100, 100, 100));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    setBackground(backgroundColor);
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    setBackground(new Color(150, 150, 150));
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    setBackground(backgroundColor);
+                }
+            });
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            g.setColor(getBackground());
+            g.fillOval(0, 0, getWidth(), getHeight());
+            super.paintComponent(g);
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(buttonWidth, buttonHeight);
+        }
+    }
+
+    // Rounded search box with no corners
+    private class RoundedSearchBox extends JTextField {
+        public RoundedSearchBox() {
+            super(10);
+            setPreferredSize(new Dimension(150, buttonHeight)); // Adjust size here
+            setOpaque(false); // Make transparent
+            setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10)); // Add padding
+            setBackground(new Color(70, 70, 70)); // Set background color
+            setForeground(Color.WHITE); // Set text color
+            setCaretColor(Color.WHITE); // Set caret color
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            g.setColor(getBackground());
+            g.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // Rounded rectangle
+            super.paintComponent(g);
+        }
+    }
+
     private JPanel createHomePanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(50, 50, 50)); // Σκούρο φόντο
-        panel.setLayout(new BorderLayout());
-
-        // Ρύθμιση εικόνας φόντου
-        JLabel backgroundLabel = new JLabel(new ImageIcon("path/to/home_background.jpg")); // Αλλαγή στο μονοπάτι της εικόνας
-        panel.add(backgroundLabel, BorderLayout.CENTER);
-        backgroundLabel.setLayout(new BorderLayout());
-
-        JLabel titleLabel = new JLabel("Welcome to the Music Player!", SwingConstants.CENTER);
+        panel.setBackground(new Color(50, 50, 50));
+        JLabel titleLabel = new JLabel("Welcome to the HOME!", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
-        backgroundLabel.add(titleLabel, BorderLayout.NORTH);
-
-        JLabel infoLabel = new JLabel("<html><div style='text-align: center; color: white;'>"
-                + "This app allows you to manage and listen to your favorite music tracks.<br>"
-                + "You can create your own playlists, explore trending songs, and much more!<br>"
-                + "Discover a variety of artists and genres at your fingertips.<br>"
-                + "Enjoy your musical journey!</div></html>", SwingConstants.CENTER);
-        infoLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        backgroundLabel.add(infoLabel, BorderLayout.CENTER);
-
+        panel.add(titleLabel, BorderLayout.NORTH);
         return panel;
     }
 
-    // Δημιουργία panel για την κατηγορία My Favorites με φόντο
-    private JPanel createFavoritesPanel() {
+    private JPanel createFavoritesSongsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(50, 50, 50)); // Σκούρο φόντο
-        panel.setLayout(new BorderLayout());
-
-        // Ρύθμιση εικόνας φόντου
-        JLabel backgroundLabel = new JLabel(new ImageIcon("path/to/favorites_background.jpg")); // Αλλαγή στο μονοπάτι της εικόνας
-        panel.add(backgroundLabel, BorderLayout.CENTER);
-        backgroundLabel.setLayout(new BorderLayout());
-
-        JLabel titleLabel = new JLabel("Your Favorite Tracks!", SwingConstants.CENTER);
+        panel.setBackground(new Color(50, 50, 50));
+        JLabel titleLabel = new JLabel("Your Favorite Songs!", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
-        backgroundLabel.add(titleLabel, BorderLayout.NORTH);
-
-        JLabel infoLabel = new JLabel("<html><div style='text-align: center; color: white;'>"
-                + "Here you can find all your favorite tracks.<br>"
-                + "Easily manage your playlists and enjoy your music!</div></html>", SwingConstants.CENTER);
-        infoLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        backgroundLabel.add(infoLabel, BorderLayout.CENTER);
-
+        panel.add(titleLabel, BorderLayout.NORTH);
         return panel;
     }
 
-    // Δημιουργία panel για την κατηγορία Profile με φόντο
-    private JPanel createProfilePanel() {
+    private JPanel createFavoritesArtistPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(50, 50, 50)); // Σκούρο φόντο
-        panel.setLayout(new BorderLayout());
-
-        // Ρύθμιση εικόνας φόντου
-        JLabel backgroundLabel = new JLabel(new ImageIcon("path/to/profile_background.jpg")); // Αλλαγή στο μονοπάτι της εικόνας
-        panel.add(backgroundLabel, BorderLayout.CENTER);
-        backgroundLabel.setLayout(new BorderLayout());
-
-        JLabel titleLabel = new JLabel("Your Profile Info!", SwingConstants.CENTER);
+        panel.setBackground(new Color(50, 50, 50));
+        JLabel titleLabel = new JLabel("Your Favorite Artists!", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
-        backgroundLabel.add(titleLabel, BorderLayout.NORTH);
-
-        JLabel infoLabel = new JLabel("<html><div style='text-align: center; color: white;'>"
-                + "Manage your account settings here.<br>"
-                + "Update your information and preferences.</div></html>", SwingConstants.CENTER);
-        infoLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        backgroundLabel.add(infoLabel, BorderLayout.CENTER);
-
+        panel.add(titleLabel, BorderLayout.NORTH);
         return panel;
     }
 
-    // Δημιουργία panel για την κατηγορία Hottest με φόντο
-    private JPanel createHottestPanel() {
+    private JPanel createMoodPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(50, 50, 50)); // Σκούρο φόντο
-        panel.setLayout(new BorderLayout());
-
-        // Ρύθμιση εικόνας φόντου
-        JLabel backgroundLabel = new JLabel(new ImageIcon("path/to/hottest_background.jpg")); // Αλλαγή στο μονοπάτι της εικόνας
-        panel.add(backgroundLabel, BorderLayout.CENTER);
-        backgroundLabel.setLayout(new BorderLayout());
-
-        JLabel titleLabel = new JLabel("Today's Hottest Hits!", SwingConstants.CENTER);
+        panel.setBackground(new Color(50, 50, 50));
+        JLabel titleLabel = new JLabel("Mood Based Suggestions!", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
-        backgroundLabel.add(titleLabel, BorderLayout.NORTH);
-
-        JLabel infoLabel = new JLabel("<html><div style='text-align: center; color: white;'>"
-                + "Check out the trending hits that everyone is listening to.<br>"
-                + "Stay updated with the latest music trends!</div></html>", SwingConstants.CENTER);
-        infoLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        backgroundLabel.add(infoLabel, BorderLayout.CENTER);
-
+        panel.add(titleLabel, BorderLayout.NORTH);
         return panel;
     }
 
     public static void main(String[] args) {
-
-        new MusicPlayer();
-        //new LoginPage(); // Αρχική εμφάνιση της σελίδας login
+        SwingUtilities.invokeLater(MusicPlayer::new);
     }
 }
