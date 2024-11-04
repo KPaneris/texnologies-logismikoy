@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 public class LoginPage extends JFrame implements ActionListener {
 
-    private JTextField userTextField;
-    private JPasswordField passwordField;
+    private final JTextField userTextField;
+    private final JPasswordField passwordField;
     private final JCheckBox showPasswordCheckbox;
 
     public LoginPage() {
@@ -29,28 +29,8 @@ public class LoginPage extends JFrame implements ActionListener {
         userLabel.setBounds(50, 30, 100, 30);
         container.add(userLabel);
 
-        /// Username TextField with rounded corners
-        JTextField userTextField = new JTextField() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // Rounded background
-                g2.dispose();
-            }
-
-            @Override
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setColor(Color.BLACK); // Border color
-                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
-                g2.dispose();
-            }
-        };
-        userTextField.setBorder(new EmptyBorder(5, 15, 5, 15)); // Add padding inside rounded border
-        userTextField.setBackground(Color.WHITE); // Background color
+        // Username TextField
+        userTextField = new JTextField();
         userTextField.setBounds(150, 30, 150, 30);
         container.add(userTextField);
 
@@ -59,28 +39,8 @@ public class LoginPage extends JFrame implements ActionListener {
         passwordLabel.setBounds(50, 70, 100, 30);
         container.add(passwordLabel);
 
-        // Password Field with rounded corners
-        JPasswordField passwordField = new JPasswordField() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // Rounded background
-                g2.dispose();
-            }
-
-            @Override
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setColor(Color.BLACK); // Border color
-                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
-                g2.dispose();
-            }
-        };
-        passwordField.setBorder(new EmptyBorder(5, 15, 5, 15)); // Add padding inside rounded border
-        passwordField.setBackground(Color.WHITE); // Background color
+        // Password Field
+        passwordField = new JPasswordField();
         passwordField.setBounds(150, 70, 150, 30);
         container.add(passwordField);
 
@@ -172,9 +132,9 @@ public class LoginPage extends JFrame implements ActionListener {
     // Inner class for Create Account page
     private static class CreateAccountPage extends JFrame implements ActionListener {
 
-        private JTextField userTextField;
-        private JPasswordField passwordField;
-        private JPasswordField confirmPasswordField;
+        private final JTextField userTextField;
+        private final JPasswordField passwordField;
+        private final JPasswordField confirmPasswordField;
         private final JCheckBox showPasswordCheckbox;
 
         public CreateAccountPage() {
@@ -190,28 +150,8 @@ public class LoginPage extends JFrame implements ActionListener {
             userLabel.setBounds(50, 30, 100, 30);
             container.add(userLabel);
 
-            // Username TextField with rounded corners
-            JTextField userTextField = new JTextField() {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    g2.setColor(getBackground());
-                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // Rounded background
-                    g2.dispose();
-                }
-
-                @Override
-                protected void paintBorder(Graphics g) {
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setColor(Color.BLACK); // Border color
-                    g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
-                    g2.dispose();
-                }
-            };
-            userTextField.setBorder(new EmptyBorder(5, 15, 5, 15)); // Add padding inside rounded border
-            userTextField.setBackground(Color.WHITE); // Background color
+            // Username TextField
+            userTextField = new JTextField();
             userTextField.setBounds(150, 30, 150, 30);
             container.add(userTextField);
 
@@ -219,28 +159,8 @@ public class LoginPage extends JFrame implements ActionListener {
             passwordLabel.setBounds(50, 70, 100, 30);
             container.add(passwordLabel);
 
-            // Password Field with rounded corners
-            JPasswordField passwordField = new JPasswordField() {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    g2.setColor(getBackground());
-                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // Rounded background
-                    g2.dispose();
-                }
-
-                @Override
-                protected void paintBorder(Graphics g) {
-                    Graphics2D g2 = (Graphics2D) g.create();
-                    g2.setColor(Color.BLACK); // Border color
-                    g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
-                    g2.dispose();
-                }
-            };
-            passwordField.setBorder(new EmptyBorder(5, 15, 5, 15)); // Add padding inside rounded border
-            passwordField.setBackground(Color.WHITE); // Background color
+            // Password Field
+            passwordField = new JPasswordField();
             passwordField.setBounds(150, 70, 150, 30);
             container.add(passwordField);
 
@@ -248,30 +168,8 @@ public class LoginPage extends JFrame implements ActionListener {
             confirmPasswordLabel.setBounds(20, 110, 130, 30);
             container.add(confirmPasswordLabel);
 
-            confirmPasswordField = new JPasswordField(){
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // Rounded background
-                g2.dispose();
-            }
-
-            @Override
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setColor(Color.BLACK); // Border color
-                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
-                g2.dispose();
-            }
-            };
-            confirmPasswordField.setBorder(new EmptyBorder(5, 15, 5, 15)); // Add padding inside rounded border
-            confirmPasswordField.setBackground(Color.WHITE); // Background color
-            confirmPasswordField.setBounds(150, 30, 150, 30);
-            container.add(confirmPasswordField);
-
+            // Confirm Password Field
+            confirmPasswordField = new JPasswordField();
             confirmPasswordField.setBounds(150, 110, 150, 30);
             container.add(confirmPasswordField);
 
