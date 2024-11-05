@@ -4,10 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MusicPlayer extends JFrame {
     private final JPanel contentPanel;
     private final CardLayout cardLayout;
+    private JPopupMenu searchResultsMenu;
 
     private final int buttonHeight = 50; // Height of buttons
     private final int buttonWidth = 50; // Width of buttons
@@ -30,12 +36,12 @@ public class MusicPlayer extends JFrame {
         toolbar.setBackground(new Color(45, 45, 45));
 
         // Create buttons for the toolbar using oval buttons
-        JButton categoriesButton = createOvalButton("Categories", "C:\\Users\\Administrator\\Desktop\\Sxolh\\texnologies_logismikoy\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\menu.png", new Color(177, 135, 35));
-        JButton homeButton = createOvalButton("Home", "C:\\Users\\Administrator\\Desktop\\Sxolh\\texnologies_logismikoy\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\home.png", new Color(243, 236, 236, 255));
-        JButton settingsButton = createOvalButton("Settings", "C:\\Users\\Administrator\\Desktop\\Sxolh\\texnologies_logismikoy\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\setting.png", new Color(33, 150, 243));
-        JButton myFavoritesSongsButton = createOvalButton("Favorite Songs", "C:\\Users\\Administrator\\Desktop\\Sxolh\\texnologies_logismikoy\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\love_songs.png", new Color(255, 0, 0));
-        JButton myFavoritesArtistButton = createOvalButton("Favorite Artist", "C:\\Users\\Administrator\\Desktop\\Sxolh\\texnologies_logismikoy\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\artist.png", new Color(76, 175, 80));
-        JButton moodButton = createOvalButton("Mood", "C:\\Users\\Administrator\\Desktop\\Sxolh\\texnologies_logismikoy\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\mood.png", new Color(255, 87, 34));
+        JButton categoriesButton = createOvalButton("Categories", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\menu.png", new Color(177, 135, 35));
+        JButton homeButton = createOvalButton("Home", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\home.png", new Color(243, 236, 236, 255));
+        JButton settingsButton = createOvalButton("Settings", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\setting.png", new Color(33, 150, 243));
+        JButton myFavoritesSongsButton = createOvalButton("Favorite Songs", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\love_songs.png", new Color(255, 0, 0));
+        JButton myFavoritesArtistButton = createOvalButton("Favorite Artist", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\artist.png", new Color(76, 175, 80));
+        JButton moodButton = createOvalButton("Mood", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\mood.png", new Color(255, 87, 34));
 
         // Create search box with rounded corners
         RoundedSearchBox searchBox = new RoundedSearchBox();
@@ -67,6 +73,10 @@ public class MusicPlayer extends JFrame {
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         add(contentPanel, BorderLayout.CENTER);
+
+        // Initialize the search results popup menu
+        searchResultsMenu = new JPopupMenu();
+        searchResultsMenu.setBackground(new Color(50, 50, 50));
 
         // Add panels for each category
         contentPanel.add(createHomePanel(), "Home");
@@ -140,7 +150,7 @@ public class MusicPlayer extends JFrame {
 
     private JButton getSearchButton(JTextField searchBox) {
         // Create a search button using the OvalButton class
-        JButton searchButton = new OvalButton("Search", "C:\\Users\\Administrator\\Desktop\\Sxolh\\texnologies_logismikoy\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\search.png", new Color(141, 220, 15)); // Use the same color as the toolbar
+        JButton searchButton = new OvalButton("Search", "C:\\Users\\dioni\\MusicPlayer\\texnologies-logismikoy\\MusicPlayer\\src\\photos\\search.png", new Color(141, 220, 15)); // Use the same color as the toolbar
         searchButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight)); // Use the same dimensions as other buttons
         searchButton.setToolTipText("Search");
 
@@ -153,10 +163,9 @@ public class MusicPlayer extends JFrame {
     }
 
     // Define the SearchAction class
-    private static class SearchAction implements ActionListener {
+    private class SearchAction implements ActionListener {
         private final JTextField searchBox;
 
-        // Constructor to pass the search box reference
         public SearchAction(JTextField searchBox) {
             this.searchBox = searchBox;
         }
@@ -164,8 +173,35 @@ public class MusicPlayer extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String searchTerm = searchBox.getText();
-            // Implement search functionality here
-            System.out.println("Searching for: " + searchTerm);
+
+            // Clear the previous search results from the popup menu
+            searchResultsMenu.removeAll();
+
+            // Call the searchYouTube method from ApiExample
+            List<String> videoTitles;
+            try {
+                videoTitles = ApiExample.searchYouTube(searchTerm);
+            } catch (GeneralSecurityException | IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Search Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Populate the search results in the popup menu
+            for (String title : videoTitles) {
+                JMenuItem menuItem = new JMenuItem(title);
+                menuItem.setForeground(Color.WHITE);
+                menuItem.setBackground(new Color(70, 70, 70));
+                menuItem.addActionListener(event -> {
+                    // Handle the action when a result is selected
+                    System.out.println("Selected video: " + title);
+                    searchResultsMenu.setVisible(false);  // Hide the menu after selection
+                });
+                searchResultsMenu.add(menuItem);
+            }
+
+            // Show the popup menu below the search box
+            searchResultsMenu.show(searchBox, 0, searchBox.getHeight());
         }
     }
 

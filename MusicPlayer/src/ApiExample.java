@@ -65,7 +65,7 @@ public class ApiExample {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                List<String> videoTitles = searchYouTube("paok");  // You can change the query here
+                List<String> videoTitles = searchYouTube("??/");  // You can change the query here
                 displayResults(videoTitles);
             } catch (GeneralSecurityException | IOException e) {
                 e.printStackTrace();
