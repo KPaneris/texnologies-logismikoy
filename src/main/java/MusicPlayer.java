@@ -4,10 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MusicPlayer extends JFrame {
     private final JPanel contentPanel;
     private final CardLayout cardLayout;
+    private JPopupMenu searchResultsMenu;
 
     private final int buttonHeight = 50; // Height of buttons
     private final int buttonWidth = 50; // Width of buttons
@@ -67,6 +72,10 @@ public class MusicPlayer extends JFrame {
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
         add(contentPanel, BorderLayout.CENTER);
+
+        //Initialize the search results popup menu
+        searchResultsMenu = new JPopupMenu();
+        searchResultsMenu.setBackground(new Color(50, 50, 50));
 
         // Add panels for each category
         contentPanel.add(createHomePanel(), "Home");
@@ -153,10 +162,9 @@ public class MusicPlayer extends JFrame {
     }
 
     // Define the SearchAction class
-    private static class SearchAction implements ActionListener {
+    private class SearchAction implements ActionListener {
         private final JTextField searchBox;
 
-        // Constructor to pass the search box reference
         public SearchAction(JTextField searchBox) {
             this.searchBox = searchBox;
         }
@@ -164,8 +172,35 @@ public class MusicPlayer extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String searchTerm = searchBox.getText();
-            // Implement search functionality here
-            System.out.println("Searching for: " + searchTerm);
+
+            // Clear the previous search results from the popup menu
+            searchResultsMenu.removeAll();
+
+            // Call the searchYouTube method from ApiExample
+            List<String> videoTitles;
+            try {
+                videoTitles = ApiExample.searchYouTube(searchTerm);
+            } catch (GeneralSecurityException | IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Search Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Populate the search results in the popup menu
+            for (String title : videoTitles) {
+                JMenuItem menuItem = new JMenuItem(title);
+                menuItem.setForeground(Color.WHITE);
+                menuItem.setBackground(new Color(70, 70, 70));
+                menuItem.addActionListener(event -> {
+                    // Handle the action when a result is selected
+                    System.out.println("Selected video: " + title);
+                    searchResultsMenu.setVisible(false);  // Hide the menu after selection
+                });
+                searchResultsMenu.add(menuItem);
+            }
+
+            // Show the popup menu below the search box
+            searchResultsMenu.show(searchBox, 0, searchBox.getHeight());
         }
     }
 
