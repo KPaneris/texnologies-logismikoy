@@ -1,0 +1,85 @@
+
+.bottom_bar_color{
+
+-fx-background-color:linear-gradient(from 25% 25% to 100% 100% ,#07262c,#15848c);
+
+}
+
+
+.top-background{
+
+-fx-background-color: #07262c;
+
+}
+
+
+.body-background{
+
+-fx-background-color:linear-gradient(from 25% 25% to 100% 100% ,#1F5F5B,#06373A);
+}
+
+
+.transparent{
+
+-fx-background-color:rgba(0,0,0,0);
+
+}
+
+.search-background{
+
+-fx-background-color: #156870;
+-fx-background-radius: 50;
+}
+
+
+.menu-bar-background{
+
+-fx-background-color:#07262c;
+-fx-background-radius:0 0 30 0;
+}
+
+
+.button-custom {
+    -fx-background-color: #1da3aa;
+    -fx-border-color: #66e2e2;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 1);
+}
+
+/* Εφέ όταν το κουμπί πατιέται */
+.button-custom:pressed {
+    -fx-background-color: #66e2e2;
+    -fx-border-color: #1da3aa;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
+}
+
+
+/***/
+
+/* Κλασσικά στυλ για τις επιλογές */
+.popup-list {
+    -fx-background-color: #1da3aa;
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+.popup-list label {
+    -fx-padding: 10px;
+    -fx-background-color: #1da3aa;
+    -fx-border-radius: 5px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.popup-list label:hover {
+    -fx-background-color: #66e2e2;
+}
