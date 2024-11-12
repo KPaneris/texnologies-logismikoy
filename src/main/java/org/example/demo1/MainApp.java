@@ -12,15 +12,15 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        showLoginPage(); // Αρχικό άνοιγμα της Login Page
+        showLoginPage(); // Start with the login page
     }
 
-    // Μέθοδος για την εμφάνιση της Login Page
+    // Display the Login Page
     public void showLoginPage() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
         Parent root = loader.load();
 
-        // Λήψη του controller και σύνδεση με την κεντρική εφαρμογή
+        // Pass MainApp instance to LoginController
         LoginController loginController = loader.getController();
         loginController.setMainApp(this);
 
@@ -29,7 +29,6 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 
-    // Μέθοδος για την εμφάνιση της Create Account Page
     public void showCreateAccountPage() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Create_Account.fxml"));
         Parent root = loader.load();
@@ -42,13 +41,13 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 
-    // Μέθοδος για την εμφάνιση της Music Player Page
+    // Display the Music Player Page
     public void showMusicPlayerPage() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MusicPlayer.fxml"));
         Parent root = loader.load();
 
         MusicPlayerController musicPlayerController = loader.getController();
-        musicPlayerController.setMainApp();
+        musicPlayerController.setMainApp(); // Optional: Pass MainApp if needed
 
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Music Player");

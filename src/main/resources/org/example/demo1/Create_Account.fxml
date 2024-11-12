@@ -24,9 +24,9 @@
             <Image url="@imag/password.png" />
          </image>
       </ImageView>
-      <Button fx:id="create_account_Button_Page" layoutX="139.0" layoutY="357.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Create Account" />
+      <Button fx:id="create_account_Button_Page" layoutX="139.0" layoutY="357.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Create Account" onAction="#handleCreateAccountButton"/>
       <CheckBox fx:id="check_pass1_Create_Account" layoutX="279.0" layoutY="224.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="112.0" styleClass="body-background" stylesheets="@css/style.css" text="Show password" textFill="WHITE" />
-      <Button fx:id="cancel_Button" layoutX="139.0" layoutY="426.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Cancel" />
+      <Button fx:id="cancel_Button" layoutX="139.0" layoutY="426.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Cancel" onAction="#handleCancelButton" />
       <PasswordField fx:id="text_pass2_Create_Account" layoutX="76.0" layoutY="270.0" prefHeight="35.0" prefWidth="187.0" promptText="Password" styleClass="search-background" stylesheets="@css/style.css" />
       <CheckBox fx:id="check_pass2_Create_Account" layoutX="279.0" layoutY="279.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="112.0" styleClass="body-background" stylesheets="@css/style.css" text="Show password" textFill="WHITE" />
       <ImageView fitHeight="95.0" fitWidth="112.0" layoutX="27.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">

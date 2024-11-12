@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="FrameLogin" prefHeight="477.0" prefWidth="361.0" styleClass="bottom_bar_color" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo1.LoginController">
+<AnchorPane fx:id="FrameLogin" prefHeight="477.0" prefWidth="361.0" styleClass="bottom_bar_color" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo1.LoginController">
    <children>
-      <TextField fx:id="create_account_Button_Login_Page" layoutX="118.0" layoutY="193.0" prefHeight="35.0" prefWidth="187.0" promptText="User Name" styleClass="search-background" stylesheets="@css/style.css" />
+      <TextField fx:id="TextField_Username" layoutX="118.0" layoutY="193.0" prefHeight="35.0" prefWidth="187.0" promptText="User Name" styleClass="search-background" stylesheets="@css/style.css" />
       <PasswordField fx:id="text_pass_Login" layoutX="118.0" layoutY="250.0" prefHeight="35.0" prefWidth="187.0" promptText="Password" styleClass="search-background" stylesheets="@css/style.css" />
       <ImageView fitHeight="35.0" fitWidth="45.0" layoutX="54.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -24,8 +19,8 @@
             <Image url="@imag/password.png" />
          </image>
       </ImageView>
-      <Button fx:id="Login_Button" layoutX="46.0" layoutY="372.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="120.0" styleClass="button-custom" stylesheets="@css/style.css" text="Login" />
-      <Button layoutX="189.0" layoutY="372.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Create Account" />
+      <Button fx:id="Login_Button" layoutX="46.0" layoutY="372.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="120.0" styleClass="button-custom" stylesheets="@css/style.css" text="Login" onAction="#handleLoginButton" />
+      <Button fx:id="create_account_Login" layoutX="189.0" layoutY="372.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Create Account" onAction="#handleCreateAccountButton"/>
       <ImageView fitHeight="88.0" fitWidth="113.0" layoutX="137.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imag/login.png" />
