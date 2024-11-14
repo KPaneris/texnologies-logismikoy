@@ -3,7 +3,6 @@ package org.example.demo1;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-
 import java.util.HashMap;
 import java.util.Map;
 

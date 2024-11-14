@@ -19,8 +19,8 @@
             <Image url="@imag/password.png" />
          </image>
       </ImageView>
-      <Button fx:id="Login_Button" layoutX="46.0" layoutY="372.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="120.0" styleClass="button-custom" stylesheets="@css/style.css" text="Login" onAction="#handleLoginButton" />
-      <Button fx:id="create_account_Login" layoutX="189.0" layoutY="372.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Create Account" onAction="#handleCreateAccountButton"/>
+      <Button fx:id="Login_Button" layoutX="46.0" layoutY="372.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="51.0" prefWidth="120.0" styleClass="button-custom" stylesheets="@css/style.css" text="Login" />
+      <Button fx:id="create_account_Login" layoutX="189.0" layoutY="372.0" mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Create Account" />
       <ImageView fitHeight="88.0" fitWidth="113.0" layoutX="137.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imag/login.png" />
@@ -33,6 +33,6 @@
       </Label>
       <CheckBox fx:id="check_pass_Login" layoutX="137.0" layoutY="302.0" mnemonicParsing="false" styleClass="body-background" stylesheets="@css/style.css" text="Show password" textFill="WHITE" />
       <Label fx:id="error_login" layoutX="166.0" layoutY="334.0" prefHeight="17.0" prefWidth="61.0" textFill="RED" />
-      <Label layoutX="89.0" layoutY="334.0" text="ERROR---&gt;&gt;&gt;" textFill="RED" />
+      <Label layoutX="89.0" layoutY="334.0" prefWidth="76.0" text="ERROR---&gt;&gt;&gt;" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>
