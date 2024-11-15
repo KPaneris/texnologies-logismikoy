@@ -7,21 +7,18 @@ import javafx.scene.layout.AnchorPane;
 public class CreateAccountController {
 
     @FXML
+
+    public AnchorPane FrameAccountApplication;
+    @FXML
     private CheckBox check_pass1_Create_Account;
     @FXML
     private PasswordField text_pass2_Create_Account;
-    @FXML
-    private AnchorPane FrameAccountApplication;
+
     @FXML
     private TextField text_user_Create_Account;
     @FXML
     private PasswordField text_pass1_Create_Account;
-    @FXML
-    private Button create_account_Button_Page;
-    @FXML
-    private Button cancel_Button;
-    @FXML
-    private CheckBox check_pass2_Create_Account;
+
     @FXML
     private Label error_create_account;
 
@@ -68,4 +65,40 @@ public class CreateAccountController {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+    // Μέθοδος για να διαχειριστεί την επιλογή του checkbox
+    @FXML
+
+    public void handleChekBoxPass2() {
+        if (check_pass1_Create_Account.isSelected()) {
+            // Αν το checkbox είναι επιλεγμένο, εμφανίζουμε τον κωδικό ως κανονικό κείμενο
+
+            text_pass1_Create_Account.setPromptText(text_pass1_Create_Account.getText());
+            text_pass1_Create_Account.setText("");
+
+            text_pass2_Create_Account.setPromptText(text_pass2_Create_Account.getText());
+            text_pass2_Create_Account.setText("");
+
+        } else {
+            // Αν δεν είναι επιλεγμένο το checkbox, εμφανίζουμε τον κωδικό ως αστερίσκους
+
+            text_pass1_Create_Account.setText(text_pass1_Create_Account.getPromptText());
+            text_pass1_Create_Account.setPromptText("");
+
+            text_pass2_Create_Account.setText(text_pass2_Create_Account.getPromptText());
+            text_pass2_Create_Account.setPromptText("");
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }

@@ -1,16 +1,24 @@
 package org.example.demo1;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginController {
 
     @FXML
-    private AnchorPane FrameLogin;
+    public CheckBox check_box_pass;
+    @FXML
+    public Button create_account_Login;
+    @FXML
+    public AnchorPane FrameLogin;
+
 
     @FXML
     private TextField TextField_Username;
@@ -18,14 +26,10 @@ public class LoginController {
     @FXML
     private PasswordField text_pass_Login;
 
-    @FXML
-    private Button Login_Button;
 
-    @FXML
-    private Button create_account_Login;
 
-    @FXML
-    private CheckBox check_pass_Login;
+
+
 
     @FXML
     private Label error_login;
@@ -36,6 +40,9 @@ public class LoginController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
+
+
+
 
     @FXML
     public void handleLoginButton() {
@@ -67,7 +74,16 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-    @FXML
+
+
+
+
+
+
+
+
+
+        @FXML
     public void initialize() {
         // Add some users for testing (username, password)
         users.put("user", "pass");
@@ -78,4 +94,26 @@ public class LoginController {
         // Check if the username exists and the password matches
         return users.containsKey(username) && users.get(username).equals(password);
     }
+
+
+
+
+    // Μέθοδος για να διαχειριστεί την επιλογή του checkbox
+    @FXML
+    public void handleChekBoxPass() {
+        if (check_box_pass.isSelected()) {
+            // Αν το checkbox είναι επιλεγμένο, εμφανίζουμε τον κωδικό ως κανονικό κείμενο
+
+            text_pass_Login.setPromptText(text_pass_Login.getText());
+            text_pass_Login.setText("");
+        } else {
+            // Αν δεν είναι επιλεγμένο το checkbox, εμφανίζουμε τον κωδικό ως αστερίσκους
+
+            text_pass_Login.setText(text_pass_Login.getPromptText());
+            text_pass_Login.setPromptText("");
+        }
+    }
+
+
+
 }

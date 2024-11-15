@@ -6,33 +6,24 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="FrameLogin" prefHeight="477.0" prefWidth="361.0" styleClass="bottom_bar_color" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo1.LoginController">
-   <children>
-      <TextField fx:id="TextField_Username" layoutX="118.0" layoutY="193.0" prefHeight="35.0" prefWidth="187.0" promptText="User Name" styleClass="search-background" stylesheets="@css/style.css" />
-      <PasswordField fx:id="text_pass_Login" layoutX="118.0" layoutY="250.0" prefHeight="35.0" prefWidth="187.0" promptText="Password" styleClass="search-background" stylesheets="@css/style.css" />
-      <ImageView fitHeight="35.0" fitWidth="45.0" layoutX="54.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@imag/user.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="35.0" fitWidth="45.0" layoutX="54.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@imag/password.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="Login_Button" layoutX="46.0" layoutY="372.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="120.0" styleClass="button-custom" stylesheets="@css/style.css" text="Login" onAction="#handleLoginButton" />
-      <Button fx:id="create_account_Login" layoutX="189.0" layoutY="372.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="140.0" styleClass="button-custom" stylesheets="@css/style.css" text="Create Account" onAction="#handleCreateAccountButton"/>
-      <ImageView fitHeight="88.0" fitWidth="113.0" layoutX="137.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@imag/login.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="119.0" layoutY="131.0" prefHeight="35.0" prefWidth="140.0" text="Login Page" textFill="WHITE">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <CheckBox fx:id="check_pass_Login" layoutX="137.0" layoutY="302.0" mnemonicParsing="false" styleClass="body-background" stylesheets="@css/style.css" text="Show password" textFill="WHITE" />
-      <Label fx:id="error_login" layoutX="166.0" layoutY="334.0" prefHeight="17.0" prefWidth="61.0" textFill="RED" />
-      <Label layoutX="89.0" layoutY="334.0" text="ERROR---&gt;&gt;&gt;" textFill="RED" />
-   </children>
+   <TextField fx:id="TextField_Username" layoutX="118.0" layoutY="193.0" prefHeight="35.0" prefWidth="187.0" promptText="User Name" styleClass="search-background" stylesheets="@css/style.css" />
+   <PasswordField fx:id="text_pass_Login" layoutX="118.0" layoutY="250.0" prefHeight="35.0" prefWidth="187.0" promptText="Password" styleClass="search-background" stylesheets="@css/style.css" />
+   <ImageView fitHeight="35.0" fitWidth="45.0" layoutX="54.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@imag/user.png" />
+   </ImageView>
+   <ImageView fitHeight="35.0" fitWidth="45.0" layoutX="54.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@imag/password.png" />
+   </ImageView>
+   <Button layoutX="46.0" layoutY="372.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="51.0" prefWidth="120.0" styleClass="button-custom" stylesheets="@css/style.css" text="Login" />
+   <Button fx:id="create_account_Login" layoutX="189.0" layoutY="372.0" mnemonicParsing="false" onAction="#handleCreateAccountButton" prefHeight="51.0" prefWidth="153.0" styleClass="button-custom" stylesheets="@css/style.css" text="Create Account" />
+   <ImageView fitHeight="88.0" fitWidth="113.0" layoutX="137.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@imag/login.png" />
+   </ImageView>
+   <Label layoutX="119.0" layoutY="131.0" prefHeight="35.0" prefWidth="140.0" text="Login Page" textFill="WHITE">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <CheckBox fx:id="check_box_pass" layoutX="137.0" layoutY="302.0" mnemonicParsing="false" onAction="#handleChekBoxPass" styleClass="body-background" stylesheets="@css/style.css" text="Show password" textFill="WHITE" />
+   <Label fx:id="error_login" layoutX="86.0" layoutY="329.0" prefHeight="35.0" prefWidth="206.0" textFill="RED" />
 </AnchorPane>
