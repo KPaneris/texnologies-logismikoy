@@ -10,14 +10,13 @@ module org.example.demo1 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires google.api.client;
     requires com.google.api.client;
+    requires com.google.api.client.json.jackson2;
     requires com.google.api.services.youtube;
     requires java.desktop;
-
-    requires com.google.api.client.json.jackson2;
-
-
-    requires google.api.client;
+    requires java.datatransfer;
+    requires jlayer;
 
     opens org.example.demo1 to javafx.fxml;
     exports org.example.demo1;
