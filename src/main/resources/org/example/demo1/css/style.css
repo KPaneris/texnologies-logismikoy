@@ -83,3 +83,13 @@
 .popup-list label:hover {
     -fx-background-color: #66e2e2;
 }
+
+.list-view .scroll-bar:vertical {
+    -fx-opacity: 0; /* Hide vertical scrollbar */
+    -fx-max-width: 0; /* Prevent interaction */
+}
+
+.list-view .scroll-bar:horizontal {
+    -fx-opacity: 0; /* Hide horizontal scrollbar */
+    -fx-max-height: 0; /* Prevent interaction */
+}
