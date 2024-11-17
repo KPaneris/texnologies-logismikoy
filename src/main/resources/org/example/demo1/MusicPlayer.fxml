@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="FrameMusicPlayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" styleClass="body-background" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo1.MusicPlayerController">
+<AnchorPane fx:id="FrameMusicPlayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" styleClass="body-background" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo1.MusicPlayerController">
    <children>
       <BorderPane layoutX="14.0" prefHeight="508.0" prefWidth="713.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -41,9 +34,12 @@
                               <Image url="@imag/search.png" />
                            </image>
                         </ImageView>
-                        <TextField promptText="Search..." styleClass="transparent" stylesheets="@css/style.css" />
+                        <TextField fx:id="searchBar" promptText="Search..." styleClass="transparent" stylesheets="@css/style.css" />
+                        <Button onAction="#handleSearch" styleClass="transparent" stylesheets="@css/style.css" text="Go" />
                      </children>
                   </HBox>
+                  <ListView fx:id="resultsList" layoutX="215.0" layoutY="60.0" prefWidth="300.0" prefHeight="200.0" visible="false"
+                            style="-fx-background-color: #003A46; -fx-control-inner-background: #003A46; -fx-border-color: transparent;" />
                   <Button fx:id="mood" layoutX="518.0" layoutY="17.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="38.0" styleClass="button-custom" stylesheets="@css/style.css">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
@@ -139,7 +135,7 @@
             <Pane prefHeight="81.0" prefWidth="750.0" stylesheets="@css/style.css" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
-            <Pane prefHeight="334.0" prefWidth="589.0" BorderPane.alignment="CENTER" />
+            <Pane prefHeight="334.0" prefWidth="589.0" visible="false" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
    </children>
