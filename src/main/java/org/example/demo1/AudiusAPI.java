@@ -1,58 +1,53 @@
 package org.example.demo1;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class AudiusAPI {
-    public static void main(String[] args) {
-        try {
-            // Define the Audius API endpoint
-            String endpoint = "https://api.audius.co/v1/tracks/trending";
 
-            // Create a URL object
-            URL url = new URL(endpoint);
+    private static final String BASE_URL = "https://api.audius.co/v1";
 
-            // Open connection
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    public static Map<String, String> fetchTrendingTracks() throws Exception {
+        String endpoint = BASE_URL + "/tracks/trending";
+        URL url = new URL(endpoint);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            // Set request method to GET
-            connection.setRequestMethod("GET");
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Accept", "application/json");
 
-            // Set request headers (optional)
-            connection.setRequestProperty("Accept", "application/json");
+        int responseCode = connection.getResponseCode();
 
-            // Get response code
-            int responseCode = connection.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = in.readLine()) != null) {
+                response.append(line);
+            }
+            in.close();
 
-            // If the response is successful (200 OK), read the response
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
+            // Parse the JSON response to extract track titles and streaming URLs
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            JSONArray tracks = jsonResponse.getJSONArray("data");
 
-                // Read each line from the input stream
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                // Print the response
-                System.out.println("Response: " + response.toString());
-            } else {
-                System.out.println("GET request failed.");
+            Map<String, String> trackMap = new HashMap<>();
+            for (int i = 0; i < tracks.length(); i++) {
+                JSONObject track = tracks.getJSONObject(i);
+                String title = track.getString("title");
+                String streamUrl = track.getString("permalink"); // Adjust if Audius API provides direct stream URL
+                trackMap.put(title, streamUrl);
             }
 
-            // Disconnect the connection
-            connection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
+            return trackMap;
+        } else {
+            throw new Exception("Failed to fetch trending tracks. Response code: " + responseCode);
         }
     }
 }

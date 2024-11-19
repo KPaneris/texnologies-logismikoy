@@ -14,7 +14,7 @@ module org.example.demo1 {
     requires java.desktop;
 
     requires com.google.api.client.json.jackson2;
-
+    requires org.json;
 
     requires google.api.client;
     requires jlayer;

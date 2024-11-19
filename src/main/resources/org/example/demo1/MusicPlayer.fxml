@@ -39,7 +39,8 @@
                      </children>
                   </HBox>
                   <ListView fx:id="resultsList" layoutX="215.0" layoutY="60.0" prefWidth="300.0" prefHeight="200.0" visible="false"
-                            style="-fx-background-color: #003A46; -fx-control-inner-background: #003A46; -fx-border-color: transparent;" />
+                            style="-fx-background-color: #003A46; -fx-control-inner-background: #003A46; -fx-border-color: transparent;"
+                            onMouseClicked="#handleListClick" />
                   <Button fx:id="mood" layoutX="518.0" layoutY="17.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="38.0" styleClass="button-custom" stylesheets="@css/style.css">
                      <graphic>
                         <ImageView fitHeight="27.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
