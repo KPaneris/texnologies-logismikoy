@@ -167,7 +167,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.example.demo1.ApiExample</mainClass>
+                            <mainClass>org.example.demo1.MainApp</mainClass>
                         </configuration>
                     </execution>
                 </executions>
